@@ -9,6 +9,8 @@ class Grille:
     def poser(self, x, y, especes):
         self.grille[y][x] = especes
 
+    def check(self, x, y):
+            return self.grille[y][x]
 
     def afficher(self):
         for ligne in self.grille:
