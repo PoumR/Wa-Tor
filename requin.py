@@ -2,6 +2,16 @@ import random
 from poisson import Poisson
 
 class Requin(Poisson):
+    """Classe représentant un requin prédateur dans un monde simulé, héritant de la classe Poisson.
+
+    Attributs:
+        position_x (int): Coordonnée horizontale actuelle sur la grille.
+        position_y (int): Coordonnée verticale actuelle sur la grille.
+        symbole (str): Représentation visuelle du requin (🦈).
+        energie (int): Niveau d'énergie actuel du requin (géré par la faim et les repas).
+        compteur_repro_requin (int): Compteur interne mesurant le temps écoulé avant la prochaine reproduction.
+        vivant (bool): État de vie de l'entité (True si vivant, False si mort).
+    """
     def __init__(self, position_x, position_y, temps_reproduction_requin, energie_initiale=8):
         super().__init__(position_x, position_y, temps_reproduction_requin)
         self.symbole = '🦈'
@@ -10,6 +20,10 @@ class Requin(Poisson):
         self.vivant = True
 
     def reproduire(self, autre, ancienne_x, ancienne_y):
+        """Gère la reproduction du requin s'il a atteint son temps de reprpdiction.
+        
+        Crée un nouveau requin sur l'ancienne case lors du déplacement.
+        """
         if self.compteur_repro_requin >= self.temps_reproduction_poisson:
             r = Requin(ancienne_x, ancienne_y, self.temps_reproduction_poisson)
             autre.poser(r)
@@ -33,6 +47,8 @@ class Requin(Poisson):
         return True
 
     def se_deplacer(self, autre):
+        """Gère le déplacement, la chasse, l'évolution de l'énergie et la reproduction du requin."""
+
         if not self.vivant:
             return
 
@@ -47,6 +63,7 @@ class Requin(Poisson):
                     nouveau_y = (self.position_y + y) % autre.hauteur
                     case = autre.check(nouveau_x, nouveau_y)
 
+                    # Si la case contient un poisson (qui n'est pas un requin), c'est une proie
                     if case is not None and isinstance(case, Poisson) and not isinstance(case, Requin):
                         prio.append([x, y, case])
                     elif case is None:
@@ -84,7 +101,7 @@ class Requin(Poisson):
             autre.grille[self.position_y][self.position_x] = self
             self.compteur_repro_requin += 1
         else:
-            # S'il est totalement bloqué, il perd de l'énergie
+            # Même s'il est bloqué, il perd de l'énergie
             self.energie -= 1
 
         # Mort du requin si énergie à 0
