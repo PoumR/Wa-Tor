@@ -63,8 +63,9 @@ class Requin(Poisson):
                     nouveau_y = (self.position_y + y) % autre.hauteur
                     case = autre.check(nouveau_x, nouveau_y)
 
-                    # Si la case contient un poisson (qui n'est pas un requin), c'est une proie
+                    # Si la case contient un poisson (qui n'est pas un requin)
                     if case is not None and isinstance(case, Poisson) and not isinstance(case, Requin):
+                        # Ajout des cases contenant les poissons dans une liste
                         prio.append([x, y, case])
                     elif case is None:
                         position.append([x, y])
