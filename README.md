@@ -40,11 +40,11 @@ La grille est **torique** : une entité qui sort d'un bord réapparaît du côt�
 
 ### Requins
 
-- Priorité à la chasse : si un poisson est sur une case voisine, le requin s'y déplace et le mange (+1 énergie, plafonnée à 6).
+- Priorité à la chasse : si un poisson est sur une case voisine, le requin s'y déplace et le mange (+1 énergie, plafonnée à 12).
 - Sinon, il se déplace vers une case vide au hasard et perd 1 énergie.
 - S'il est bloqué, il perd aussi 1 énergie.
 - Il meurt quand son énergie tombe à 0.
-- Il se reproduit quand son compteur atteint `temps_reproduction_requin` (7 par défaut), sur la case qu'il vient de quitter.
+- Il se reproduit quand son compteur atteint `temps_reproduction_requin`, sur la case qu'il vient de quitter.
 - Énergie initiale : 6.
 
 ## Structure du projet
